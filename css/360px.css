@@ -1,0 +1,23 @@
+/* This is too small for my browser, and from what I can tell mobile browser size is a bit bigger than 360, but I will still code for it based off of guess work...
+and I'll make a 640px width just in case */
+@media (max-width: 360px) {
+  .logo {
+    width: 5%;
+  }
+  header {
+    height: 1em;
+  }
+  .socialbar {
+    display: none;
+  }
+  .text {
+    font-size: 7px;
+    margin-top: 0em;
+  }
+  h1{
+    font-size: 20px;
+  }
+  h4 {
+    font-size: 10px;
+  }
+}

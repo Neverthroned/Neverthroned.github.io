@@ -1,0 +1,279 @@
+/* =============================
+   Global
+============================= */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #1e1e1e;
+  color: #eee;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =============================
+   Header / Navigation
+============================= */
+/* Header / Navigation */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1em 0;
+  z-index: 1000;
+}
+
+.navbar {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;  /* center links horizontally */
+  gap: 2em;                 /* spacing between links */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.nav-links li a {
+  color: #eee;
+  text-decoration: none;
+  font-size: 1.2em;
+  padding: 0.5em 1em;
+  transition: background 0.3s ease, color 0.3s ease;
+  border-radius: 5px;
+}
+
+.nav-links li a:hover {
+  background: linear-gradient(45deg, #9b59b6, #1abc9c);
+  color: #fff;
+  background-size: 200% 200%;
+  animation: gradientBG 3s ease infinite;
+}
+
+/* Gradient animation for hover */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* =============================
+   Hero
+============================= */
+.hero {
+  text-align: center;
+  padding: 8em 2em 4em;
+  background: linear-gradient(180deg, #1e1e1e, #2a2a2a);
+  overflow: hidden;
+}
+
+.hero h1 {
+  font-size: 3em;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.hero p {
+  font-size: 1.2em;
+  color: #ccc;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out 0.3s;
+}
+
+.fade-in {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* =============================
+   Portfolio Section
+============================= */
+.portfolio {
+  display: flex;
+  flex-direction: column;
+  gap: 3em;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2em 1em;
+}
+
+.portfolio-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #2a2a2a;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.portfolio-item.in-view {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.6s ease-out;
+}
+
+.portfolio-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+.portfolio-image {
+  position: relative;
+}
+
+.portfolio-image img {
+  width: 100%;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+/* Gradient hover */
+.portfolio-item:hover .overlay {
+  opacity: 1;
+  background: linear-gradient(45deg, #9b59b6, #1abc9c, #8e44ad, #16a085);
+  background-size: 400% 400%;
+  animation: gradientBG 6s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.overlay h2 {
+  margin: 0.5em 0;
+  font-size: 1.5em;
+}
+
+.overlay p {
+  font-size: 1em;
+  color: #ccc;
+}
+
+/* =============================
+   Contact Page
+============================= */
+.contact {
+  max-width: 800px;
+  margin: 6em auto;
+  padding: 2em;
+  background: #2a2a2a;
+  border-radius: 10px;
+  color: #eee;
+}
+
+.contact h1 {
+  margin-top: 0;
+}
+
+.contact ul {
+  list-style: none;
+  padding: 0;
+  margin: 1em 0 2em;
+}
+
+.contact ul li {
+  margin-bottom: 0.5em;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 0.75em;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  background: #1e1e1e;
+  color: #eee;
+}
+
+.contact-form button {
+  padding: 0.75em;
+  background: #B9314F;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background: #a12844;
+}
+
+/* =============================
+   About Page
+============================= */
+.about {
+  max-width: 1000px;
+  margin: 6em auto;
+  padding: 2em;
+  background: #2a2a2a;
+  border-radius: 10px;
+  color: #eee;
+}
+
+.about-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  align-items: flex-start;
+}
+
+.about-photo {
+  max-width: 250px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-text h1 {
+  margin-top: 0;
+  font-size: 2em;
+}
+
+.about-text p {
+  margin-bottom: 1em;
+  color: #ccc;
+  line-height: 1.6;
+}

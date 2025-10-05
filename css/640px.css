@@ -1,0 +1,18 @@
+@media (max-width: 640px) {
+  .logo {
+    width: 5%;
+  }
+  header {
+    height: 1em;
+  }
+  .socialbar {
+    display: none;
+  }
+  .text {
+    font-size: 15px;
+    margin-top: 0em;
+  }
+  h4 {
+    font-size: 20px;
+  }
+}

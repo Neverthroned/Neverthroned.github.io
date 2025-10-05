@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'OstrichSans-Medium';
+  src: url('../fonts/OstrichSans-Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'CooperHewitt-Light';
+  src: url('../fonts/CooperHewitt-Light.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
