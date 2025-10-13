@@ -138,8 +138,8 @@ header {
 .portfolio-image video {
   width: 100%;
   display: block;
-  object-fit: cover; /* ensures it fills the box without distortion */
-  height: auto;      /* let it scale with container */
+  object-fit: cover; 
+  height: auto;      
 }
 
 .portfolio-image img {
