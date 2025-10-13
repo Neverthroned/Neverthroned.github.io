@@ -135,6 +135,13 @@ header {
   position: relative;
 }
 
+.portfolio-image video {
+  width: 100%;
+  display: block;
+  object-fit: cover; /* ensures it fills the box without distortion */
+  height: auto;      /* let it scale with container */
+}
+
 .portfolio-image img {
   width: 100%;
   display: block;
