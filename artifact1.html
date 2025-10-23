@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artifact 1 | Burkes Portfolio</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    /* Code block styling (consistent with dark site theme) */
+    pre {
+      background: #1a1a1a;
+      padding: 1em;
+      border-radius: 8px;
+      overflow-x: auto;
+      color: #dcdcdc;
+      font-family: Consolas, monospace;
+      font-size: 0.95em;
+      line-height: 1.5;
+      border: 1px solid #333;
+    }
+
+    .artifact {
+      max-width: 900px;
+      margin: 6em auto;
+      padding: 2em;
+      background: #2a2a2a;
+      border-radius: 10px;
+    }
+
+    .artifact h1 {
+      text-align: center;
+      margin-bottom: 1.5em;
+      color: #fff;
+    }
+
+    .description {
+      color: #ccc;
+      margin: 1.5em 0;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./about.html">About</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Artifact Content -->
+  <main class="artifact">
+    <h1>Artifact 1 – Unity Datamosh Shader</h1>
+
+    <!-- Section 1 -->
+    <pre><code>
+using UnityEngine;
+using UnityEngine.Experimental.Rendering;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition;
+
+[System.Serializable]
+public class DatamoshPass : CustomPass
+{
+    [SerializeField] public ComputeShader datamoshCompute;
+    [Range(0f, 2f)][SerializeField] public float decay = 0.98f;
+    [SerializeField] public float motionScale = 1.0f;
+    [SerializeField] public float noiseScale = 0.5f;
+    [SerializeField] public float noiseSpeed = 1.0f;
+    [SerializeField] public Color tint = Color.white;
+    [Range(1, 5)][SerializeField] int kernelRadius = 2;
+    [SerializeField] float motionDiffThreshold = 0.03f;
+
+    [SerializeField] Material datamoshMat;
+
+    // RTHandles
+    RTHandle snapshotRT = null;
+    RTHandle tempRT = null;
+
+    bool snapshotTaken = false;
+    bool snapshotCopied = false;
+
+    int kernelCS = -1;
+
+    protected override void Setup(ScriptableRenderContext ctx, CommandBuffer cmd)
+    {
+        if (datamoshCompute != null)
+            kernelCS = datamoshCompute.FindKernel("CSMain");
+    }
+
+    protected override void Execute(CustomPassContext ctx)
+    {
+        if (datamoshCompute == null)
+        {
+            Debug.LogError("DatamoshPass: Compute shader not assigned!");
+            return;
+        }
+
+        if (kernelCS < 0)
+        {
+            Debug.LogError("DatamoshPass: Invalid kernel index!");
+            return;
+        }
+
+        if (!snapshotTaken) return;
+
+        EnsureRTsMatchCamera(ctx);
+
+        var camRT = ctx.cameraColorBuffer.rt;
+        int w = camRT.width;
+        int h = camRT.height;
+
+        // 1. Copy camera buffer to tempRT
+        HDUtils.BlitCameraTexture(ctx.cmd, ctx.cameraColorBuffer, tempRT);
+
+        // 2. Initialize snapshotRT if first frame
+        if (!snapshotCopied)
+        {
+            ctx.cmd.CopyTexture(tempRT.rt, snapshotRT.rt);
+            snapshotCopied = true;
+        }
+
+        // 3. Dispatch compute shader
+        ctx.cmd.SetComputeTextureParam(datamoshCompute, kernelCS, "_SnapshotTex", snapshotRT.rt);
+        ctx.cmd.SetComputeTextureParam(datamoshCompute, kernelCS, "_CurrentFrame", tempRT.rt);
+        ctx.cmd.SetComputeFloatParam(datamoshCompute, "_Decay", decay);
+        ctx.cmd.SetComputeFloatParam(datamoshCompute, "_NoiseScale", noiseScale);
+        ctx.cmd.SetComputeFloatParam(datamoshCompute, "_NoiseSpeed", noiseSpeed);
+        ctx.cmd.SetComputeFloatParam(datamoshCompute, "_MotionDiffThreshold", motionDiffThreshold);
+        ctx.cmd.SetComputeVectorParam(datamoshCompute, "_Tint", tint); // Use SetComputeVectorParam for color
+        ctx.cmd.SetComputeFloatParam(datamoshCompute, "_Time", Time.time);
+        ctx.cmd.SetComputeIntParam(datamoshCompute, "_KernelRadius", 2);
+
+        ctx.cmd.DispatchCompute(datamoshCompute, kernelCS, Mathf.CeilToInt(w / 8.0f), Mathf.CeilToInt(h / 8.0f), 1);
+
+        // 4. Draw fullscreen using Datamosh material
+        if (datamoshMat != null)
+        {
+            datamoshMat.SetTexture("_SnapshotTex", snapshotRT);
+            datamoshMat.SetTexture("_CurrentFrame", tempRT);
+            CoreUtils.SetRenderTarget(ctx.cmd, ctx.cameraColorBuffer, ClearFlag.None);
+            CoreUtils.DrawFullScreen(ctx.cmd, datamoshMat, ctx.cameraColorBuffer);
+        }
+    }
+
+    protected override void Cleanup()
+    {
+        snapshotRT?.Release(); snapshotRT = null;
+        tempRT?.Release(); tempRT = null;
+    }
+
+    void EnsureRTsMatchCamera(CustomPassContext ctx)
+    {
+        var camRT = ctx.cameraColorBuffer.rt;
+        if (camRT == null)
+        {
+            Debug.LogError("DatamoshPass: Camera RT null");
+            return;
+        }
+
+        int w = camRT.width;
+        int h = camRT.height;
+
+        if (snapshotRT == null || snapshotRT.rt.width != w || snapshotRT.rt.height != h)
+        {
+            snapshotRT?.Release();
+            tempRT?.Release();
+
+            // Use high precision format for RGBA
+            snapshotRT = RTHandles.Alloc(w, h, colorFormat: GraphicsFormat.R32G32B32A32_SFloat, enableRandomWrite: true);
+            tempRT = RTHandles.Alloc(w, h, colorFormat: GraphicsFormat.R32G32B32A32_SFloat, enableRandomWrite: true);
+
+
+            snapshotCopied = false;
+            Debug.Log($"DatamoshPass: allocated RTs W:{w} H:{h}");
+        }
+    }
+
+    public void TakeSnapshot()
+    {
+        snapshotTaken = true;
+        snapshotCopied = false;
+        Debug.Log("DatamoshPass: TakeSnapshot called");
+    }
+
+    public void EndEffect()
+    {
+        snapshotTaken = false;
+        snapshotCopied = false;
+        snapshotRT?.Release(); snapshotRT = null;
+        tempRT?.Release(); tempRT = null;
+        Debug.Log("DatamoshPass: EndEffect called and snapshot cleared");
+    }
+}
+    </code></pre>
+    <p class="description">
+      This script implements a custom render pass in Unity’s High Definition Render Pipeline (HDRP) that manages communication between the compute shader and the fragment shader responsible for the datamoshing effect. It captures and stores the camera’s current frame as a texture, then feeds that data—along with motion, noise, and color parameters—into the compute shader to generate distortion artifacts. The processed results are composited back onto the screen using a full-screen material pass, allowing dynamic, real-time video glitch effects driven by the camera’s render data.
+    </p>
+
+    <!-- Section 2 -->
+    <pre><code>
+Shader "Unlit/Datamosh"
+{
+    Properties
+    {
+        _SnapshotTex ("Snapshot (RGBA)", 2D) = "white" {}
+        _CurrentFrame ("Current Frame", 2D) = "white" {}
+    }
+    SubShader
+    {
+        Tags { "RenderPipeline"="HDRenderPipeline" }
+        Pass
+        {
+            Name "CompositePass"
+            ZTest Always
+            ZWrite Off
+            Cull Off
+
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+
+            TEXTURE2D(_SnapshotTex);  SAMPLER(sampler_SnapshotTex);
+            TEXTURE2D(_CurrentFrame); SAMPLER(sampler_CurrentFrame);
+
+            struct Attributes { uint vertexID : SV_VertexID; };
+            struct Varyings { float4 positionCS : SV_POSITION; float2 texcoord : TEXCOORD0; };
+
+            Varyings vert(Attributes input)
+            {
+                Varyings output;
+                output.positionCS = GetFullScreenTriangleVertexPosition(input.vertexID);
+                output.texcoord   = GetFullScreenTriangleTexCoord(input.vertexID);
+                return output;
+            }
+
+            float4 frag(Varyings IN) : SV_Target
+            {
+                float2 uv = IN.texcoord;
+
+                float4 live = SAMPLE_TEXTURE2D(_CurrentFrame, sampler_CurrentFrame, uv);
+                float4 snap = SAMPLE_TEXTURE2D(_SnapshotTex, sampler_SnapshotTex, uv);
+
+                // Composite: snapshot drives blending (alpha pre-updated by compute)
+                float3 outCol = lerp(live.rgb, snap.rgb, snap.a);
+
+                return float4(outCol, 1.0);
+            }
+            ENDHLSL
+        }
+    }
+    FallBack Off
+}
+    </code></pre>
+    <p class="description">
+      This unlit shader performs the final compositing stage of the datamoshing effect. It blends the live camera feed (_CurrentFrame) with the stored snapshot (_SnapshotTex) using the snapshot’s alpha channel, which is dynamically updated by the compute shader. This creates the illusion of video compression artifacts as the old frame gradually bleeds into the new one, producing a smooth yet chaotic glitch transition on screen.
+    </p>
+
+    <!-- Section 3 -->
+    <pre><code>
+#pragma kernel CSMain
+
+RWTexture2D<float4> _SnapshotTex; // UAV - persistent buffer (enableRandomWrite true)
+Texture2D<float4> _CurrentFrame; // SRV - current camera frame
+
+// Settings (set from C#)
+int _KernelRadius; // e.g. 1 => 3x3, 2 => 5x5
+float _MotionDiffThreshold; // threshold for considering a neighbor as "different" (0..1)
+float4 _Tint; // optional tint (usually 1,1,1,1)
+float _Time; // unused here but kept for compatibility
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    uint width, height;
+    _SnapshotTex.GetDimensions(width, height);
+
+    if (id.x >= width || id.y >= height)
+        return;
+
+    uint2 uv = id.xy;
+
+    // read current pixel
+    float4 live = _CurrentFrame[uv];
+
+    // read stored snapshot pixel
+    float4 prev = _SnapshotTex[uv];
+
+    // init snapshot on first use (alpha==0)
+    if (prev.a == 0.0)
+    {
+        _SnapshotTex[uv] = float4(live.rgb * _Tint.rgb, 1.0);
+        return;
+    }
+
+    // --- Local motion estimation: find neighbor with max color difference ---
+    float2 bestMotion = float2(0, 0);
+    float maxDiff = 0.0;
+
+    // clamp kernel radius to a reasonable max to avoid extremely heavy loops
+    int kr = clamp(_KernelRadius, 1, 8);
+
+    for (int y = -kr; y <= kr; y++)
+    {
+        for (int x = -kr; x <= kr; x++)
+        {
+            if (x == 0 && y == 0)
+                continue;
+            int2 n = int2(uv) + int2(x, y);
+            if (n.x < 0 || n.y < 0 || n.x >= int(width) || n.y >= int(height))
+                continue;
+
+            float4 neighbor = _CurrentFrame[n];
+            float diff = length(neighbor.rgb - live.rgb);
+            if (diff > maxDiff)
+            {
+                maxDiff = diff;
+                bestMotion = float2(x, y);
+            }
+        }
+    }
+
+    // decide whether motion is meaningful
+    bool hasMotion = (maxDiff >= _MotionDiffThreshold);
+
+    // --- compute previous-sample coords (subpixel not required here; use integer shift) ---
+    float2 prevUVf = float2(uv) - bestMotion; // shift snapshot by motion
+    prevUVf = clamp(prevUVf, 0.0, float2(width - 1, height - 1));
+
+    // fetch bilinear sample from snapshot for smoother trails
+    int2 uv00 = int2(floor(prevUVf));
+    int2 uv11 = int2(min(uv00 + 1, int2(width - 1, height - 1)));
+    float2 frac = prevUVf - uv00;
+
+    float4 c00 = _SnapshotTex[uv00];
+    float4 c10 = _SnapshotTex[int2(uv11.x, uv00.y)];
+    float4 c01 = _SnapshotTex[int2(uv00.x, uv11.y)];
+    float4 c11 = _SnapshotTex[uv11];
+
+    float4 displaced = lerp(lerp(c00, c10, frac.x), lerp(c01, c11, frac.x), frac.y);
+
+    // --- Persistence policy ---
+    // If there's motion, write the displaced snapshot (so trails continue).
+    // If there's no motion, use the live frame 
+    float4 outCol;
+    if (hasMotion)
+    {
+        // keep previous color and alpha as-is (persist)
+        outCol = displaced;
+    }
+    else
+    {
+        // no motion, overwrite snapshot with live pixel
+        outCol = float4(live.rgb * _Tint.rgb, 1.0);
+    }
+
+    // Ensure clamped values and store
+    outCol.rgb = saturate(outCol.rgb);
+    outCol.a = 1.0;
+    _SnapshotTex[uv] = outCol;
+}
+    </code></pre>
+    <p class="description">
+      This compute shader performs the core datamoshing logic, analyzing per-pixel motion between frames to determine where color data should persist or shift. It compares each pixel in the live frame to its neighbors, identifies areas of motion, and offsets parts of the previous snapshot accordingly to create distorted motion trails. The result is a simulated compression-artifact effect that blends old and new frame data directly on the GPU for real-time, dynamic glitch visuals.
+    </p>
+  </main>
+
+</body>
+</html>
