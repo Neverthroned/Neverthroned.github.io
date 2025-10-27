@@ -195,6 +195,52 @@ header {
   color: #ccc;
 }
 
+/* 
+Artifacts
+*/
+
+.artifact {
+      max-width: 900px;
+      margin: 6em auto;
+      padding: 2em;
+      background: #2a2a2a;
+      border-radius: 10px;
+    }
+
+    .artifact h1 {
+      text-align: center;
+      margin-bottom: 1.5em;
+      color: #fff;
+    }
+
+    .description {
+      color: #ccc;
+      margin: 1.5em 0;
+      line-height: 1.6;
+    }
+
+    /* Artifact Gallery */
+.artifact-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  text-align: center;
+}
+
+.artifact-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+}
+
+.artifact-item p {
+  margin-top: 1em;
+  color: #ccc;
+  line-height: 1.5;
+}
+
 /* =============================
    Contact Page
 ============================= */
