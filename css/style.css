@@ -298,6 +298,67 @@ Artifacts
 }
 
 /* =============================
+   Resume / Cover Letter Section
+============================= */
+.resume-section {
+  margin-top: 3em;
+  background: #2a2a2a;
+  padding: 2em;
+  border-radius: 10px;
+}
+
+.resume-section h2 {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 1em;
+}
+
+.download-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin-bottom: 2em;
+}
+
+.download-btn {
+  background: linear-gradient(45deg, #9b59b6, #1abc9c);
+  color: white;
+  padding: 0.75em 1.5em;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.doc-section {
+  background: #1e1e1e;
+  border-radius: 8px;
+  margin-bottom: 1em;
+  overflow: hidden;
+}
+
+.doc-section summary {
+  padding: 1em;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  background: #333;
+  border-bottom: 1px solid #444;
+}
+
+.doc-content {
+  padding: 1em;
+  color: #ccc;
+  line-height: 1.6;
+}
+
+/* =============================
    About Page
 ============================= */
 .about {
