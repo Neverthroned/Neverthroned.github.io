@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artifact 3 | Burkes Portfolio</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./about.html">About</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+ <!-- Main Content -->
+  <main class="artifact">
+    <section class="artifact-header">
+      <h1>Artifact 3: Dithering, and other Retro Visual Effects</h1>
+      <p>By using the concepts described in the video, I undertook the process of creating the visual effects in a different version of Unity</p>
+    </section>
+
+    <!-- Embedded Video -->
+    <section class="artifact-video">
+      <div class="video-container">
+        <iframe 
+          src="https://www.youtube.com/embed/FACSX6cxv4c?si=2ke1RefUeIboh41b"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <p class="description">
+        This video by Pxl Dev demonstrates the implementation of Dithering, Color Quantization, and Pixelation in Unity 6 in URP.
+      </p>
+    </section>
+
+    <!-- Image Gallery -->
+    <section class="artifact-gallery">
+      <div class="artifact-item">
+        <img src="images/artifact3dithering.png" alt="Artifact 3 image 1">
+        <p><strong>Image 1:</strong> This is the intended effect of the video, slightly modified with aberration, but largely based around pixelation and dithering.
+        It uses a custom rednering setup, relying on a raw image to convey the current situation to the player and using the camera to output a render texture to
+        that image, as well as the shader graph so that it can be manipulated.</p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="images/artifact3wodithering.png" alt="Artifact 3 image 2">
+        <p><strong>Image 2:</strong> Without the dithering effect, it produces an effect not disimilar to found footage, or corrupted or low quality video files with the 
+            harsh black outlines created through the edge mask and the pixelation and color quantization.</p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="images/artifact3main.png" alt="Artifact 3 image 3">
+        <p><strong>Image 3:</strong> This is the main shader graph as described in the video, with some minor edits to support the Unity version and HDRP. It has capability
+        to use custom palettes, bayer matrices, and differing resolutions. I'll refrain from going into detail as the author explains it better than I do.</p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="images/artifact3uvmain.png" alt="Artifact 3 image 4">
+        <p><strong>Image 4:</strong> One of my additions was the UV section, orginally made to produce a more visible chromatic aberration effect, it instead creates a dark outline
+        (based on the principles of chromatic aberration) which I think is more suitable for this specific video effect. The effect is created by getting the screen position UVs
+        and manipulating them to fit into the custom camera setup described by the above video. This requires some math in order to get the right resolution on the effect
+        as well as the right rotation and dimensions.</p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="images/artifact3uvsampler.png" alt="Artifact 3 image 5">
+        <p><strong>Image 5:</strong> Once again, more math is needed to match the UVs to the screen size, and here we also see the sampling of those UVs before they
+        are sent to the edge mask.</p>
+      </div>
+      <div class="artifact-item">
+        <img src="images/artifact3edgemask.png" alt="Artifact 3 image 5">
+        <p><strong>Image 6:</strong> Here is the edge mask, which creates the stylistic outlines portrayed more significantly in the image without dithering. This 
+        effect is also visible with dithering, but is slightly different and produces a different stylistic effect.</p>
+        <br>
+        <p><strong>Explanation:</strong> My main additions to this were getting this to work in HDRP as opposed to URP, as well as downgrading the version it was housed in, from Unity 6 to
+            Unity 2023. These additions were fairly straightforward and only involved negligble changes in syntax and camera setup, noticeably
+            some of the assets were located in different areas, or under different names, this is most apparent with the render texture asset being located differently
+            in Unity 6 as compared to my version, and some of the node settings in the shader graph needing to be changed to support HDRP. The other main addition was 
+            the outline effect, having been created through similar methods as chromatic aberration. This took siginificantly more effort in order to get the effect 
+            to line up correctly with the image, whether that be its rotation, orientation, or resolution. Ultimately, the edge mask and sampling was fairly straightforward 
+            but getting the UVs to properly be incorporated in the image was extremely difficult and required repeated testing in order to function. Currently
+            the effect is not in an ideal state, as the way the UVs are incorporated might interfere with other video effects, mainly due to the fact that by definition 
+            the UVs are upside down in order to accomodate the raw image setup. This I feel can be alleviated through more testing and effort on my part, but for the time being 
+            the effect works as intended and any changes would only help with future maintenance.
+        </p>
+        <br>
+        <p> Why did I make these additions? This is largely due to my own selfish reasons of trying to get this to work in an older version of Unity and to have more control 
+            with the settings offered by HDRP. I'm a devout fan of the dithering effect, and most other retro visual effects and it has always been a wish of mine to 
+            get one of these to work. I have attempted to do so in the past, but all of these attempts led to failure. Having found this video by Pxl Dev gave me hope seeing as how 
+            the Unity versions weren't incredibly far off, and likely wouldn't need too much in terms of changing assets in favor of compatability. Ultimately, I am 
+            happy that the process wasn't largely different and I hope that some other developers might make of my documentation. As for why I added an aberration-like effect? 
+            This was another effect I'm partial to, however it didn't come out in the way as intended. Yet, I'm still very happy with how it did turn out, and creates 
+            an effect similar to low quality or old corrupted videos. I would like to create true chromatic aberration, but for now I'm more than happy having created 
+            something I didn't really know was possible.
+        </p>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
