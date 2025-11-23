@@ -240,6 +240,13 @@ Artifacts
   color: #ccc;
   line-height: 1.5;
 }
+.artifact-item video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+}
 
 /* =============================
    Contact Page
@@ -396,4 +403,65 @@ Artifacts
   margin-bottom: 1em;
   color: #ccc;
   line-height: 1.6;
+}
+
+/*========================
+    Palette generator
+========================*/
+
+#paletteGeneratorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  background: #1e1e1e;
+  padding: 1.5em;
+  border-radius: 10px;
+}
+
+#paletteCanvas {
+  width: 100%;
+  max-width: 512px;
+  border-radius: 8px;
+  image-rendering: pixelated;
+  background: #000;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 100%;
+  max-width: 400px;
+}
+
+.controls label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ccc;
+}
+
+.controls input[type="range"] {
+  width: 60%;
+}
+
+.controls button {
+  padding: 0.5em;
+  border: none;
+  border-radius: 5px;
+  background: #B9314F;
+  color: white;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  background: #a12844;
+}
+
+#preview {
+  width: 256px;
+  height: 256px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }

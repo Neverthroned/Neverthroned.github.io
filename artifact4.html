@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artifact 4 | Burkes Portfolio</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./about.html">About</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="artifact">
+    <section class="artifact-header">
+      <h1>Artifact 4: Noise and Custom Palettes</h1>
+      <p>Applying noise through custom functions and textures, and custom palettes and generators.</p>
+    </section>
+
+    <!-- Image Gallery -->
+    <section class="artifact-gallery">
+
+        <div class="artifact-item">
+        <video autoplay muted loop playsinline>
+        <source src="videos/artifact4.mp4" type="video/mp4">
+        </video>
+        <p> Blue noise and white noise being applied to the dither effect.</p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="images/artifact4.png" alt="Artifact 4 image 1">
+        <p><strong>Image 1:</strong> With every effect applied, custom palette, noise texture, and a custom noise function.</p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="images/artifact4noise.png" alt="Artifact 3 image 2">
+        <p><strong>Image 2:</strong> Noise can be applied in two different ways (in this instance), through a custom texture which can be attached to the tiling offset of the dither
+            effect, or can be added to the final dither output, or it can be applied using a custom function. The top portion (noise texture) is the noise texture code, using a similar screen
+            size scaler as the dither effect and tiling the desired noise texture. The middle portion (custom noise/function) takes an outside shader include file,
+            or hlsl. This process also doesn't limit the function to be noise as hlsl files offer extreme flexibility, so it could be used for applying noise to a UV, or
+            a custom time function that can add a transforming effect to your shader depending on where you put it.</p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="images/artifact4hlsl.png" alt="Artifact 3 image 2">
+        <p><strong>Image 3:</strong> This is the custom hlsl file, currently configured to take an input of UVs, and output a float. This creates a white noise texture, which
+            creates an interesting effect on screen, however its a smaller effect and not easily noticeable.</p>
+      </div>
+
+      <div class="artifact-item">
+  <div id="generator">
+    <canvas id="preview"></canvas>
+
+    <div class="controls">
+      <label>Color 1: <input type="color" id="hue1" value="#ff0000"></label>
+      <label>Color 2: <input type="color" id="hue2" value="#0000ff"></label>
+      <label>Saturation: <input type="range" id="saturation" min="0" max="1" step="0.01" value="1"></label>
+      <label>Gamma: <input type="range" id="gamma" min="0.1" max="3" step="0.1" value="1"></label>
+      <button id="reset">Reset</button>
+    </div>
+  </div>
+  
+        <p> This is a custom palette generator I made. Pxl Dev's video from the previous project offers the ability to input custom color palettes.
+            The main issue though is that they generally need a larger amount of colors, up to 32x32. I haven't been able to locate any websites that offer this, so 
+            I created a small generator with the ability to change gamma, saturation, and select two colors to act as the gradient. Originally they were only selectable by hue, 
+            but now it's possible to have the gradient cycle between saturation and value. You can then download the image, and attach it to the palette section of 
+            the shader and it will perform a color swap, creating an effect. This palette selection also allows for separate saturation layers, where you can 
+            stack another 32x32 image creating a 32x64, and offering the color swap system a wider range of saturation and color values.</p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="images/artifact4palette.png" alt="Artifact 3 image 2">
+        <p><strong>Image 4:</strong> Another palette, which can be seen on the right.</p>
+      </div>
+
+      </section>
+
+    </main>
+
+    <script src="./js/generator.js"></script>
+
+</body>
+</html>
