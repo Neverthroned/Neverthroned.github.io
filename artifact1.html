@@ -38,6 +38,13 @@
     <h1>Artifact 1 – Unity Datamosh Shader</h1>
 
     <!-- Section 1 -->
+     <div class="artifact-item">
+        <video autoplay muted loop playsinline>
+          <source src="videos/artifact1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p>The final effect, with a bleeding effect of motion between frames.</p>
+    </div>
     <pre><code>
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
@@ -179,7 +186,14 @@ public class DatamoshPass : CustomPass
 }
     </code></pre>
     <p class="description">
-      This script implements a custom render pass in Unity’s High Definition Render Pipeline (HDRP) that manages communication between the compute shader and the fragment shader responsible for the datamoshing effect. It captures and stores the camera’s current frame as a texture, then feeds that data—along with motion, noise, and color parameters—into the compute shader to generate distortion artifacts. The processed results are composited back onto the screen using a full-screen material pass, allowing dynamic, real-time video glitch effects driven by the camera’s render data.
+      This script implements a <b>custom render pass</b> in <b>Unity’s High Definition Render Pipeline (HDRP)</b> that manages 
+      communication between the <b>compute shader</b> and the <b>fragment shader</b> responsible for the datamoshing effect. 
+      It captures and stores the camera’s <b>current frame</b> as a texture, then feeds that data—along with <b>motion, noise, 
+      and color parameters</b> into the <b>compute shader</b> to generate distortion artifacts. The processed results are 
+      composited back onto the screen using a <b>full-screen material pass</b>, allowing dynamic, real-time video glitch 
+      effects driven by the camera’s render data. Ultimately, this is a really complicated way of achieving this. 
+      All that's needed is for a capture of the <b>current</b> and <b>previous frame</b> and those captures to be 
+      changed into materials. Then all that's needed is to properly plug them into any shader that utilizes them.
     </p>
 
     <!-- Section 2 -->
@@ -240,7 +254,10 @@ Shader "Unlit/Datamosh"
 }
     </code></pre>
     <p class="description">
-      This unlit shader performs the final compositing stage of the datamoshing effect. It blends the live camera feed (_CurrentFrame) with the stored snapshot (_SnapshotTex) using the snapshot’s alpha channel, which is dynamically updated by the compute shader. This creates the illusion of video compression artifacts as the old frame gradually bleeds into the new one, producing a smooth yet chaotic glitch transition on screen.
+      This <b>unlit shader</b> performs the final compositing stage of the datamoshing effect. It blends the live camera 
+      feed <b>(_CurrentFrame)</b> with the stored snapshot <b>(_SnapshotTex)</b> using the snapshot’s alpha channel, which is 
+      dynamically updated by the <b>compute shader</b>. This creates the illusion of video compression artifacts as the old 
+      frame gradually bleeds into the new one, producing a smooth yet chaotic glitch transition on screen.
     </p>
 
     <!-- Section 3 -->
@@ -348,7 +365,11 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 }
     </code></pre>
     <p class="description">
-      This compute shader performs the core datamoshing logic, analyzing per-pixel motion between frames to determine where color data should persist or shift. It compares each pixel in the live frame to its neighbors, identifies areas of motion, and offsets parts of the previous snapshot accordingly to create distorted motion trails. The result is a simulated compression-artifact effect that blends old and new frame data directly on the GPU for real-time, dynamic glitch visuals.
+      This <b>compute shader</b> performs the core datamoshing logic, analyzing <b>per-pixel motion</b> between frames to 
+      determine where color data should persist or shift. It compares each pixel in the live frame to 
+      its neighbors, identifies areas of motion, and offsets parts of the previous snapshot accordingly 
+      to create distorted motion trails. The result is a simulated compression-artifact effect that blends 
+      old and new frame data directly on the GPU for real-time, dynamic glitch visuals.
     </p>
   </main>
 
