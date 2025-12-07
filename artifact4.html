@@ -22,7 +22,7 @@
   <main class="artifact">
     <section class="artifact-header">
       <h1>Artifact 4: Noise and Custom Palettes</h1>
-      <p>Applying noise through custom functions and textures, and custom palettes and generators.</p>
+      <p>Applying <b>noise</b> through <b>custom functions and textures</b>, and <b>custom palettes and generators</b>.</p>
     </section>
 
     <!-- Image Gallery -->
@@ -32,26 +32,26 @@
         <video autoplay muted loop playsinline>
         <source src="videos/artifact4.mp4" type="video/mp4">
         </video>
-        <p> Blue noise and white noise being applied to the dither effect.</p>
+        <p> <b>Blue noise and white noise</b> being applied to the <b>dither</b> effect.</p>
       </div>
 
       <div class="artifact-item">
         <img src="images/artifact4.png" alt="Artifact 4 image 1">
-        <p><strong>Image 1:</strong> With every effect applied, custom palette, noise texture, and a custom noise function.</p>
+        <p><strong>Image 1:</strong> With every effect applied; <b>custom palette, noise texture</b>, and a <b>custom noise function</b>.</p>
       </div>
 
       <div class="artifact-item">
         <img src="images/artifact4noise.png" alt="Artifact 3 image 2">
-        <p><strong>Image 2:</strong> Noise can be applied in two different ways (in this instance), through a custom texture which can be attached to the tiling offset of the dither
-            effect, or can be added to the final dither output, or it can be applied using a custom function. The top portion (noise texture) is the noise texture code, using a similar screen
-            size scaler as the dither effect and tiling the desired noise texture. The middle portion (custom noise/function) takes an outside shader include file,
-            or hlsl. This process also doesn't limit the function to be noise as hlsl files offer extreme flexibility, so it could be used for applying noise to a UV, or
+        <p><strong>Image 2:</strong> <b>Noise</b> can be applied in two different ways (in this instance), through a <b>custom texture</b> which can be attached to the <b>tiling offset</b> of the <b>dither</b>
+            effect, or can be added to the final <b>dither</b> output, or it can be applied using a <b>custom function</b>. The top portion (noise texture) is the <b>noise texture code</b>, using a similar <b>screen
+            size scaler</b> as the <b>dither</b> effect and <b>tiling</b> the desired <b>noise texture</b>. The middle portion (custom noise/function) takes an outside <b>shader include file</b>,
+            or <b>HLSL</b>. This process also doesn't limit the function to be noise as <b>HLSL files</b> offer extreme flexibility, so it could be used for applying noise to a UV, or
             a custom time function that can add a transforming effect to your shader depending on where you put it.</p>
       </div>
 
       <div class="artifact-item">
         <img src="images/artifact4hlsl.png" alt="Artifact 3 image 2">
-        <p><strong>Image 3:</strong> This is the custom hlsl file, currently configured to take an input of UVs, and output a float. This creates a white noise texture, which
+        <p><strong>Image 3:</strong> This is the custom <b>HLSL file</b>, currently configured to take an input of <b>UVs</b>, and output a <b>float</b>. This creates a <b>white noise texture</b>, which
             creates an interesting effect on screen, however its a smaller effect and not easily noticeable.</p>
       </div>
 
@@ -68,17 +68,17 @@
     </div>
   </div>
   
-        <p> This is a custom palette generator I made. Pxl Dev's video from the previous project offers the ability to input custom color palettes.
-            The main issue though is that they generally need a larger amount of colors, up to 32x32. I haven't been able to locate any websites that offer this, so 
-            I created a small generator with the ability to change gamma, saturation, and select two colors to act as the gradient. Originally they were only selectable by hue, 
-            but now it's possible to have the gradient cycle between saturation and value. You can then download the image, and attach it to the palette section of 
-            the shader and it will perform a color swap, creating an effect. This palette selection also allows for separate saturation layers, where you can 
-            stack another 32x32 image creating a 32x64, and offering the color swap system a wider range of saturation and color values.</p>
+        <p> This is a custom palette generator I made. <b>Pxl Dev's</b> video from the previous project offers the ability to input <b>custom color palettes</b>.
+            The main issue though is that they generally need a larger amount of colors, up to <b>32x32</b>. I haven't been able to locate any websites that offer this, so 
+            I created a small generator with the ability to change <b>gamma, saturation</b>, and select two colors to act as the <b>gradient</b>. Originally they were only selectable by hue, 
+            but now it's possible to have the gradient cycle between saturation and value. You can then download the image, and attach it to the <b>palette section</b> of 
+            the <b>shader</b> and it will perform a <b>color swap</b>, creating an effect. This palette selection also allows for separate <b>saturation layers</b>, where you can 
+            stack another <b>32x32 image</b> creating a <b>32x64</b>, and offering the color swap system a wider range of saturation and color values.</p>
       </div>
 
       <div class="artifact-item">
         <img src="images/artifact4palette.png" alt="Artifact 3 image 2">
-        <p><strong>Image 4:</strong> Another palette, which can be seen on the right.</p>
+        <p><strong>Image 4:</strong> Another palette, which can be seen as a small png on the right within the editor.</p>
       </div>
 
       </section>

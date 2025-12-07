@@ -39,7 +39,7 @@
         </iframe>
       </div>
       <p class="description">
-        This video by Pxl Dev demonstrates the implementation of Dithering, Color Quantization, and Pixelation in Unity 6 in URP.
+        The video above by <b>Pxl Dev</b> demonstrates the implementation of <b>Dithering, Color Quantization, and Pixelation</b> in <b>Unity 6</b> in <b>URP</b>.
       </p>
     </section>
 
@@ -47,63 +47,63 @@
     <section class="artifact-gallery">
       <div class="artifact-item">
         <img src="images/artifact3dithering.png" alt="Artifact 3 image 1">
-        <p><strong>Image 1:</strong> This is the intended effect of the video, slightly modified with aberration, but largely based around pixelation and dithering.
-        It uses a custom rednering setup, relying on a raw image to convey the current situation to the player and using the camera to output a render texture to
-        that image, as well as the shader graph so that it can be manipulated.</p>
+        <p><strong>Image 1:</strong> This is the intended effect of the video, slightly modified with aberration, but largely based around <b>pixelation</b> and <b>dithering</b>.
+        It uses a custom rendering setup, relying on a <b>raw image</b> to convey the current situation to the player and using the <b>camera</b> to output a <b>render texture</b> to
+        that image, as well as the <b>shader graph</b> so that it can be manipulated.</p>
       </div>
 
       <div class="artifact-item">
         <img src="images/artifact3wodithering.png" alt="Artifact 3 image 2">
-        <p><strong>Image 2:</strong> Without the dithering effect, it produces an effect not disimilar to found footage, or corrupted or low quality video files with the 
-            harsh black outlines created through the edge mask and the pixelation and color quantization.</p>
+        <p><strong>Image 2:</strong> Without the <b>dithering effect</b>, it produces an effect not disimilar to found footage, or corrupted or low quality video files with the 
+            harsh black outlines created through the <b>edge mask</b> and the <b>pixelation</b> and <b>color quantization</b>.</p>
       </div>
 
       <div class="artifact-item">
         <img src="images/artifact3main.png" alt="Artifact 3 image 3">
-        <p><strong>Image 3:</strong> This is the main shader graph as described in the video, with some minor edits to support the Unity version and HDRP. It has capability
-        to use custom palettes, bayer matrices, and differing resolutions. I'll refrain from going into detail as the author explains it better than I do.</p>
+        <p><strong>Image 3:</strong> This is the main <b>shader graph</b> as described in the video, with some minor edits to support the <b>Unity version</b> and <b>HDRP</b>. It has capability
+        to use <b>custom palettes</b>, <b>bayer matrices</b>, and <b>differing resolutions</b>. I'll refrain from going into detail as the author explains it better than I do.</p>
       </div>
 
       <div class="artifact-item">
         <img src="images/artifact3uvmain.png" alt="Artifact 3 image 4">
-        <p><strong>Image 4:</strong> One of my additions was the UV section, orginally made to produce a more visible chromatic aberration effect, it instead creates a dark outline
-        (based on the principles of chromatic aberration) which I think is more suitable for this specific video effect. The effect is created by getting the screen position UVs
+        <p><strong>Image 4:</strong> One of my additions was the <b>UV section</b>, orginally made to produce a more visible chromatic aberration effect, it instead creates a dark outline
+        (based on the principles of chromatic aberration) which I think is more suitable for this specific video effect. The effect is created by getting the <b>screen position UVs</b>
         and manipulating them to fit into the custom camera setup described by the above video. This requires some math in order to get the right resolution on the effect
         as well as the right rotation and dimensions.</p>
       </div>
 
       <div class="artifact-item">
         <img src="images/artifact3uvsampler.png" alt="Artifact 3 image 5">
-        <p><strong>Image 5:</strong> Once again, more math is needed to match the UVs to the screen size, and here we also see the sampling of those UVs before they
-        are sent to the edge mask.</p>
+        <p><strong>Image 5:</strong> Once again, more math is needed to match the <b>UVs</b> to the <b>screen size</b>, and here we also see the sampling of those <b>UVs</b> before they
+        are sent to the <b>edge mask</b>.</p>
       </div>
       <div class="artifact-item">
         <img src="images/artifact3edgemask.png" alt="Artifact 3 image 5">
-        <p><strong>Image 6:</strong> Here is the edge mask, which creates the stylistic outlines portrayed more significantly in the image without dithering. This 
+        <p><strong>Image 6:</strong> Here is the <b>edge mask</b>, which creates the stylistic outlines portrayed more significantly in the image without <b>dithering</b>. This 
         effect is also visible with dithering, but is slightly different and produces a different stylistic effect.</p>
         <br>
-        <p><strong>Explanation:</strong> My main additions to this were getting this to work in HDRP as opposed to URP, as well as downgrading the version it was housed in, from Unity 6 to
-            Unity 2023. These additions were fairly straightforward and only involved negligble changes in syntax and camera setup, noticeably
-            some of the assets were located in different areas, or under different names, this is most apparent with the render texture asset being located differently
-            in Unity 6 as compared to my version, and some of the node settings in the shader graph needing to be changed to support HDRP. The other main addition was 
+        <p><strong>Explanation:</strong> My main additions to this were getting this to work in <b>HDRP</b> as opposed to <b>URP</b>, as well as downgrading the version it was housed in, from <b>Unity 6</b> to
+            <b>Unity 2023</b>. These additions were fairly straightforward and only involved negligble changes in syntax and camera setup, noticeably
+            some of the assets were located in different areas, or under different names, this is most apparent with the <b>render texture asset</b> being located differently
+            in Unity 6 as compared to my version, and some of the node settings in the <b>shader graph</b> needing to be changed to support <b>HDRP</b>. The other main addition was 
             the outline effect, having been created through similar methods as chromatic aberration. This took siginificantly more effort in order to get the effect 
-            to line up correctly with the image, whether that be its rotation, orientation, or resolution. Ultimately, the edge mask and sampling was fairly straightforward 
-            but getting the UVs to properly be incorporated in the image was extremely difficult and required repeated testing in order to function. Currently
-            the effect is not in an ideal state, as the way the UVs are incorporated might interfere with other video effects, mainly due to the fact that by definition 
-            the UVs are upside down in order to accomodate the raw image setup. This I feel can be alleviated through more testing and effort on my part, but for the time being 
+            to line up correctly with the image, whether that be its <b>rotation, orientation, or resolution</b>. Ultimately, the <b>edge mask</b> and sampling was fairly straightforward 
+            but getting the <b>UVs</b> to properly be incorporated in the image was extremely difficult and required repeated testing in order to function. Currently
+            the effect is not in an ideal state, as the way the <b>UVs</b> are incorporated might interfere with other video effects, mainly due to the fact that by definition 
+            the UVs are upside down in order to accomodate the <b>raw image setup</b>. This I feel can be alleviated through more testing and effort on my part, but for the time being 
             the effect works as intended and any changes would only help with future maintenance.
         </p>
         <br>
         <p> Why did I make these additions? This is largely due to my own selfish reasons of trying to get this to work in an older version of Unity and to have more control 
-            with the settings offered by HDRP. I'm a devout fan of the dithering effect, and most other retro visual effects and it has always been a wish of mine to 
-            get one of these to work. I have attempted to do so in the past, but all of these attempts led to failure. Having found this video by Pxl Dev gave me hope seeing as how 
+            with the settings offered by <b>HDRP</b>. I'm a devout fan of the dithering effect, and most other retro visual effects and it has always been a wish of mine to 
+            get one of these to work. I have attempted to do so in the past, but all of these attempts led to failure. Having found this video by <b>Pxl Dev</b> gave me hope seeing as how 
             the Unity versions weren't incredibly far off, and likely wouldn't need too much in terms of changing assets in favor of compatability. Ultimately, I am 
-            happy that the process wasn't largely different and I hope that some other developers might make of my documentation. As for why I added an aberration-like effect? 
+            happy that the process wasn't largely different and I hope that some other developers might make some use of my documentation. As for why I added an aberration-like effect? 
             This was another effect I'm partial to, however it didn't come out in the way as intended. Yet, I'm still very happy with how it did turn out, and creates 
             an effect similar to low quality or old corrupted videos. I would like to create true chromatic aberration, but for now I'm more than happy having created 
             something I didn't really know was possible. If anything though, I didn't truly improve upon anything that needed improving, there's no real reason 
             to have changed the original project to an older version of Unity, and the aberration itself is purely an aesthetic improvement and largely based 
-            on opinion. So I do hope anyone reading this finds this interesting, or at least helpful in creating a similar effect, and I hope I led you to Pxl Dev's video 
+            on opinion. So I do hope anyone reading this finds this interesting, or at least helpful in creating a similar effect, and I hope I led you to <b>Pxl Dev's</b> video 
             so that you to can make a dithering effect.
         </p>
       </div>
