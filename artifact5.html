@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artifact 5 | Burkes Portfolio</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./about.html">About</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+<!-- Main Content -->
+  <main class="artifact">
+    <section class="artifact-header">
+      <h1>Larval: 48 Hour Game Jam</h1>
+      <a href="https://replaydk.itch.io/larval"><b>Itch.io Link</b></a>
+      <br>
+      <a href="https://globalgamejam.org/games/2026/larval-5"><b>Global Game Jam Website</b></a>
+      <p>A four person team working in Unreal on the Game Jam theme of mask. We made a bug extermination Game 
+        doom-esque in style and gameplay with the ability to change masks which change your gameplay.
+      </p>
+      
+    </section>
+
+    <section class="artifact-gallery">
+      <div class="artifact-item">
+        <img src="images/larval1.png" alt="Larval Picture 1">
+        </video>
+        <p>The game is a 3D, FPS, simulation with a horror artstyle made by Kaisha Gerhardt. 
+          Dean Klakken worked on game development, programming, audio and level design. I worked on 
+          game development, programming and audio.
+        </p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="./images/larval2.png" alt="Larval Picture 2">
+        <p>My major contributions are the inventory system, basic enemy AI, an audio mixer, 
+          the mask changing concept, and the main and pause menu.
+        </p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="./images/larval3.png" alt="Larval Picture 3">
+        <p>The inventory was largely built from scratch, taking a framwork from a video and realizing that it wouldn't 
+          work with our game. I then rebuilt it from the ground up to enable the switching slot by number like we wanted
+          as well as incorporating the functionality with using items while they were in the slot. This 
+          also required our team members to coordinate moving data between one system and another since we were working 
+          on two separate laptops. A significant amount of time was spent on porting and adjusting the 
+          inventory to work on my teammates laptop. Enemy AI was also 
+          built from scratch using a simple pawn sensing node and move framework. Audio was simple and only required 
+          making classes for the separate audio sounds, however the module wasn't able to be applied to the game before 
+          it was uploaded, and as such the audio isn't adjustable like it should be. The mask changing module was
+          made from complete scratch, requiring proper function between the inventory and it, implementation of changing 
+          VFX within Unreal, and a stencil buffer to hide certain objects from the post processing (the latter option 
+          wasn't fully implemented before the game was uploaded). Ultimately this project took a lot of coordination 
+          and time management to get to work, not too mention staying up in the night to finish some of these systems.
+        </p>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
