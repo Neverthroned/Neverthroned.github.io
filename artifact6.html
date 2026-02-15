@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invection 5 | Burkes Portfolio</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./about.html">About</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+<!-- Main Content -->
+  <main class="artifact">
+    <section class="artifact-header">
+      <h1>Invection 5: Eye VFX</h1>
+      <p>By using concepts in this video I made VFX for a boss enemy</p>
+    </section>
+
+    <section class="artifact-video">
+      <div class="video-container">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/JXzrw9-ZFDE?si=G5G45SSmopcEg5rM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+
+    <p class="description">
+        The video above by <b>A Bit of Game Dev</b> demonstrates the implementation of a shader for an explosion 
+        effect, which I appropriated in order to create a boss enemy themed around an Eye.
+      </p>
+    </section>
+
+    <!-- Image Gallery -->
+    <section class="artifact-gallery">
+      <div class="artifact-item">
+        <img src="images/invection5/invection5dark.png" alt="Invection 5 image 1">
+        <p><strong>Image 1:</strong> This is the first part of the effect, largely unmodified compared to the video 
+        tutorial linked above. By taking a <b>noise texture</b> and applying a <b>fresnel effect</b> to it 
+        you can create interesting VFX when applying the shader to a mesh. This section of the graph implements the 
+        'dark color' of the effect, and in this case the Eye's outline. This section also is connected to an 
+        <b>add node</b> to be combined with the light color and the <b>alpha</b> of the graph which allows for 
+        transparency.</p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="images/invection5/invection5light.png" alt="Invection 5 image 2">
+        <p><strong>Image 2:</strong> This section of the graph is largely similar to the first section, with the only 
+        differences being the power of the <b>fresnel effect</b> and the <b>saturate node</b>. This creates the 
+        light color, or the pupil of the eye, and is linked to the <b>add node</b> from before and the 
+        <b>emission</b> of the graph, allowing for a more pronounced light effect.</p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="images/invection5/invection5noise1.png" alt="Invection 5 image 3">
+        <p><strong>Image 3:</strong> The shader graph makes heavy usage of noise in order to achieve the desired 
+        effect. The inner portion of the eye uses a standard noise texture plugged into both of the 
+        <b>texture samples</b> from before, however the outer eye is a bit more complicated. For that I used a video 
+        file created from <b>TouchDesigner</b> which required creating a <b>video player</b> object within the Unity 
+        Editor. This <b>video player</b> would cast to a render texture to be applied to an identical shader graph 
+        as before within those <b>texture samples</b>. This would create the animated effect I was looking for. 
+        Within this image, I'm creating the first noise insert in <b>TouchDesigner</b> from scratch. That is to say 
+        this is where I divert from the tutorial video's instructions.</p>
+      </div>
+
+      <div class="artifact-item">
+        <img src="images/invection5/invection5noise2.png" alt="Invection 5 image 4">
+        <p><strong>Image 4:</strong> The previous noise insert is fed into this graph to to create several 
+        <b>glitch effects</b>, though the most notable is what many would refer to as <b>circuit bending</b>. 
+        After all of this, its fed into a movie file out to be used in Unity, more specifically to be implemented 
+        into the <b>video player</b> object from before.</p>
+      </div>
+
+      <div class="artifact-item">
+        <video autoplay muted loop playsinline>
+        <source src="videos/invection5.mp4" type="video/mp4">
+        Your browser does not support the video tag
+      </video>
+        <p><strong>Final Render:</strong> The final effect renders a glitchy looking Eye, with an inner and outer shell</p>
+        <br>
+        <p><strong>Explanation:</strong> While the video detailed using this practice in the form of an explosion 
+          that also makes usage of the <b>Unity particle system</b> I opted to instead use the concept of the 
+          <b>fresnel effect</b> in order to achieve a desirable VFX for a boss character. This required heavy 
+          improvisation on my part in order to get this to properly work. Completely contrary to the video, I 
+          instead wanted to create a standalone effect that would render an intimidating and unique boss, using outside 
+          software such as <b>TouchDesigner</b> to get the noise effects I wanted. These noise effects would then be 
+          integrated into the <b>video player</b> system to then be cast into a texture usable by the shader graph. 
+          Ultimately, a lot of this is mainly about aesthetic choice, and manipulating what kind of surface the different 
+          portions of the Eye should render as. The inner portion acting as a solid, opaque sphere with slight 
+          <b>alpha clipping</b>, and the outer as a transparent object with largely opposing settings for 
+          <b>dissolve</b> and <b>smoothstep</b>. The next steps for me would to integrate visual cues for when the eye 
+          plans to attack by animating the integral settings.
+        </p>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
